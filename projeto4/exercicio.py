@@ -97,6 +97,10 @@ class AnaliseDados(ABC):
     def mostraMaior(self):
         pass
 
+    @abstractmethod
+    def listarEmOrdem(self):
+        pass
+
 
 class ListaNomes(AnaliseDados):
     def __init__(self):
@@ -120,6 +124,10 @@ class ListaNomes(AnaliseDados):
 
     def mostraMaior(self):
         print("Maior:", max(self.__lista))
+
+    def listarEmOrdem(self):
+        sorted_list = sorted(self.__lista)
+        print("Lista em ordem:", sorted_list)
 
 
 class ListaDatas(AnaliseDados):
@@ -148,6 +156,12 @@ class ListaDatas(AnaliseDados):
     def mostraMaior(self):
         print("Maior:", max(self.__lista))
 
+    def listarEmOrdem(self):
+        self.__lista.sort()
+        print("Lista em ordem:")
+        for data in self.__lista:
+            print(data)
+
 
 class ListaSalarios(AnaliseDados):
     def __init__(self):
@@ -174,6 +188,10 @@ class ListaSalarios(AnaliseDados):
 
     def mostraMaior(self):
         print("Maior:", max(self.__lista))
+
+    def listarEmOrdem(self):
+        self.__lista.sort()
+        print("Lista em ordem:", self.__lista)
 
 
 class ListaIdades(AnaliseDados):
@@ -202,6 +220,10 @@ class ListaIdades(AnaliseDados):
     def mostraMaior(self):
         print("Maior:", max(self.__lista))
 
+    def listarEmOrdem(self):
+        self.__lista.sort()
+        print("Lista em ordem:", self.__lista)
+
 
 def main():
     nomes = ListaNomes()
@@ -209,13 +231,38 @@ def main():
     salarios = ListaSalarios()
     idades = ListaIdades()
 
+    # Entrada de dados para as listas
+    for lista in [nomes, datas, salarios, idades]:
+        lista.entradaDeDados()
+
     listaListas = [nomes, datas, salarios, idades]
 
+    # Exemplo de uso do iterador zip para percorrer listas de nomes e salários
+    print("Iterador zip - Nome e Salário:")
+    for nome, salario in zip(nomes._ListaNomes__lista, salarios._ListaSalarios__lista):
+        print(f"Nome: {nome}, Salário: {salario}")
+    print("___________________")
+
+    # Exemplo de uso do iterador map para calcular reajuste de salários em 10%
+    print("Iterador map - Reajuste de Salários:")
+    salarios._ListaSalarios__lista = list(map(lambda x: x * 1.1, salarios._ListaSalarios__lista))
+    print("Salários reajustados:", salarios._ListaSalarios__lista)
+    print("___________________")
+
+    # Exemplo de uso do iterador filter para modificar datas anteriores a 2019
+    print("Iterador filter - Modificação de Datas:")
+    datas._ListaDatas__lista = list(filter(lambda x: x.ano < 2019, datas._ListaDatas__lista))
+    for data in datas._ListaDatas__lista:
+        data.dia = 1
+        print(data)
+    print("___________________")
+
+    # Executando as operações estatísticas nas listas
     for lista in listaListas:
-        lista.entradaDeDados()
         lista.mostraMediana()
         lista.mostraMenor()
         lista.mostraMaior()
+        lista.listarEmOrdem()
         print("___________________")
 
     print("Fim do teste!!!")
@@ -224,4 +271,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-    #exercicio 1
+    #exercicio 2

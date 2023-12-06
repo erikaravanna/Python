@@ -75,6 +75,7 @@ class Data:
         return False
 
 
+
 class AnaliseDados(ABC):
     @abstractmethod
     def __init__(self, tipoDeDados):
@@ -268,7 +269,85 @@ def main():
     print("Fim do teste!!!")
 
 
-if __name__ == "__main__":
-    main()
+def incluir_nome(lista_nomes):
+    nome = input("Digite o nome: ")
+    lista_nomes._ListaNomes__lista.append(nome)
 
-    #exercicio 2
+def incluir_salario(lista_salarios):
+    salario = float(input("Digite o salário: "))
+    lista_salarios._ListaSalarios__lista.append(salario)
+
+def incluir_data(lista_datas):
+    dia = int(input("Digite o dia: "))
+    mes = int(input("Digite o mês: "))
+    ano = int(input("Digite o ano: "))
+    data = Data(dia, mes, ano)
+    lista_datas._ListaDatas__lista.append(data)
+
+def incluir_idade(lista_idades):
+    idade = int(input("Digite a idade: "))
+    lista_idades._ListaIdades__lista.append(idade)
+
+def percorrer_listas(lista_nomes, lista_salarios):
+    print("Iterador zip - Nome e Salário:")
+    for nome, salario in zip(lista_nomes._ListaNomes__lista, lista_salarios._ListaSalarios__lista):
+        print(f"Nome: {nome}, Salário: {salario}")
+    print("___________________")
+
+def calcular_folha(lista_salarios):
+    print("Iterador map - Reajuste de Salários:")
+    lista_salarios._ListaSalarios__lista = list(map(lambda x: x * 1.1, lista_salarios._ListaSalarios__lista))
+    print("Salários reajustados:", lista_salarios._ListaSalarios__lista)
+    print("___________________")
+
+def modificar_datas(lista_datas):
+    print("Iterador filter - Modificação de Datas:")
+    lista_datas._ListaDatas__lista = list(filter(lambda x: x.ano < 2019, lista_datas._ListaDatas__lista))
+    for data in lista_datas._ListaDatas__lista:
+        data.dia = 1
+        print(data)
+    print("___________________")
+
+def menu():
+    nomes = ListaNomes()
+    datas = ListaDatas()
+    salarios = ListaSalarios()
+    idades = ListaIdades()
+
+    while True:
+        print("\nMenu:")
+        print("1. Incluir um nome na lista de nomes")
+        print("2. Incluir um salário na lista de salários")
+        print("3. Incluir uma data na lista de datas")
+        print("4. Incluir uma idade na lista de idades")
+        print("5. Percorrer as listas de nomes e salários")
+        print("6. Calcular o valor da folha com um reajuste de 10%")
+        print("7. Modificar o dia das datas anteriores a 2019")
+        print("8. Sair")
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == '1':
+            incluir_nome(nomes)
+        elif opcao == '2':
+            incluir_salario(salarios)
+        elif opcao == '3':
+            incluir_data(datas)
+        elif opcao == '4':
+            incluir_idade(idades)
+        elif opcao == '5':
+            percorrer_listas(nomes, salarios)
+        elif opcao == '6':
+            calcular_folha(salarios)
+        elif opcao == '7':
+            modificar_datas(datas)
+        elif opcao == '8':
+            print("Saindo do programa...")
+            break
+        else:
+            print("Opção inválida. Por favor, escolha uma opção válida.")
+
+if __name__ == "__main__":
+    menu()
+
+    #exercicio 3
